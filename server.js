@@ -1,7 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var path = require('path');
-
+var songRouter = require('./routes/songs');
 var app = express();
 
 // middleware function, gets executed on each request
@@ -10,8 +10,13 @@ app.use(function(req, res, next){
   next();
 });
 
+
+
 // middleware for parsing the body and turning it into a JS object
 app.use(bodyParser.urlencoded({extended: true}));
+
+app.use('/songs', songRouter);
+
 
 app.post('/', function(req, res){
   console.log('req.body=', req.body);
@@ -35,18 +40,6 @@ app.get('/kittens', function(req, res){
   }
 });
 
-var songs = [];
-
-app.post('/songs', function(req, res){
-  console.log('req.body:', req.body);
-  songs.push(req.body);
-  console.log('songs', songs);
-  res.sendStatus(200);
-});
-
-app.get('/songs', function(req, res){
-  res.send(songs);
-});
 
 // middleware for serving static files
 app.use(express.static('public'));

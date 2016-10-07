@@ -4,18 +4,24 @@ $(function(){
 
   // listen for submit events and send new songs to the server
   $('form').on('submit', function(event){
+    //if (($('#title').val()==='')||($('#artist').val()==='')||(($('#title').val()==='')&&($('#artist').val()===''))){
+      //alert("Please enter a valid title or artist!");
+    //}else{
     event.preventDefault();
     var formData = $(this).serialize();
     $.ajax({
       type: 'POST',
       url: '/songs',
       data: formData,
-      success: getSongs
+      success: getSongs,
+      //failure: someFn,     failure function
     });
 
     $(this).find('input[type=text]').val('');
-  });
+  //})
+  });//end of listener
 });
+
 
 function getSongs() {
   $.ajax({
